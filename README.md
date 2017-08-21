@@ -42,5 +42,6 @@ document.write('It works.')
 5. 执行
 ` npm run dev `
 
-##环境准备
+
+#环境准备
 1. 安装node
