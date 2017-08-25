@@ -80,6 +80,61 @@ document.write('It works.')
 6. 执行npm install webpack-dev-server
 7. 实践，更改index.js 中的内容，浏览器自动刷新，注意更改index.html中内容不会自动刷新
 
+
+#实践React
+1. 修改inde.js
+```
+'use strict';
+import React from 'react';
+import ReactDOM from 'react-dom';
+
+ReactDOM.render(
+    <h1>Hello, world !</h1>,
+    document.getElementById('root')
+);
+
+```
+2. 修改webpack.config.js
+```
+module:{
+    loaders: [{
+        test: /\.jsx?$/, // 用正则来匹配文件路径，这段意思是匹配 js 或者 jsx
+        loader: 'babel-loader', // 加载模块 "babel" 是 "babel-loader" 的缩写
+        query: {
+            presets:['react']
+        }
+    }]
+},
+```
+3. 在inde.html中添加
+`<div id="root"></div>`
+4. 安装依赖包
+`npm install react --save-dev`
+`npm install react-dom --save-dev`
+`npm install babel-loader --save-dev`
+`npm install babel-preset-react --save-dev`
+注：安装完以上四个可以试试`npm run webpack-dev-server`是否能运行起来，如果可以就不需要安装babel-core，如果不行就再安装下`npm install babel-core --save-dev`
+
+#加载Css
+1. 安装依赖包
+`npm install css-loader style-loader --save-dev`
+2. 在webpack.config.js 中修改moudle
+```
+module:{
+    loaders: [{
+        test: /\.jsx?$/, // 用正则来匹配文件路径，这段意思是匹配 js 或者 jsx
+        loader: 'babel-loader', // 加载模块 "babel" 是 "babel-loader" 的缩写
+        query: {
+            presets:['react']
+        }
+    }, 
+    {
+        test: /\.css$/, // Only .css files
+        loader: 'style-loader!css-loader' // Run both loaders
+    }]
+},
+```
+
 #环境准备
 1. 安装node
 2. `sudo npm install webpack-dev-server -g`
