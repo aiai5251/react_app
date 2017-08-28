@@ -3,6 +3,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './com.css';
 import $ from 'jquery';
+var createReactClass = require('create-react-class');
 
 var names = ['Alice', 'Emily', 'Kate'];
 var arr = [
@@ -10,13 +11,13 @@ var arr = [
     <h2 key="2">React is awesome</h2>
 ];
 
-var Hellomessage = React.createClass({
+var Hellomessage = createReactClass({
     render:function() {
         return <h1>hello {this.props.name}</h1>;
     }
 });
 
-var NotesList = React.createClass({
+var NotesList = createReactClass({
     render: function() {
         return (
             <ol>
@@ -31,7 +32,7 @@ var NotesList = React.createClass({
 });
 
 // var data = {'nnn': 'dasda'};
-// var Mytitle = React.createClass({
+// var Mytitle = createReactClass({
 //     propTypes: {
 //         title: React.PropTypes.string.isRequired,
 //     },
@@ -40,7 +41,7 @@ var NotesList = React.createClass({
 //     }
 // });
 
-var MyComponent = React.createClass({
+var MyComponent = createReactClass({
     handleClick: function() {
         alert(1);
         this.refs.myTextInput.focus();
@@ -55,7 +56,7 @@ var MyComponent = React.createClass({
     }
 });
 // 组件必须为大写的
-var LikeButton = React.createClass({
+var LikeButton = createReactClass({
     getInitialState: function() {
         return {liked: false};
     },
@@ -72,7 +73,7 @@ var LikeButton = React.createClass({
     }
 });
 
-var Hello = React.createClass({
+var Hello = createReactClass({
     getInitialState: function() {
         return {
             opactity: 0.5
@@ -101,7 +102,7 @@ var Hello = React.createClass({
     }
 });
 
-var UserGist = React.createClass({
+var UserGist = createReactClass({
     getInitialState: function() {
         return {
             username: '',
@@ -109,16 +110,16 @@ var UserGist = React.createClass({
         };
     },
     componentDidMount: function() {
-        console.log("asdasd");
         $.get(this.props.source, function(result) {
-            console.log(result);
-            var lastGist = result[0];
-            if (this.isMounted()) {
-                this.setState({
-                    username: lastGist.owner.login,
-                    lastGistUrl: lastGist.html_url
-                });
-            };
+            if (result.length > 0) {
+                var lastGist = result[0];
+                if (lastGist != null) {
+                    this.setState({
+                        username: lastGist.owner.login,
+                        lastGistUrl: lastGist.html_url
+                    });    
+                }
+            }
         }.bind(this));
     },
     render: function() {
@@ -130,7 +131,7 @@ var UserGist = React.createClass({
     }
 });
 
-var RepoList = React.createClass({
+var RepoList = createReactClass({
     getInitialState: function() {
         return {
             loading: true,

@@ -135,6 +135,75 @@ module:{
 },
 ```
 
+#使用jquery请求
+1. 安装依赖
+`npm i jquery --save`
+2. 使用
+```
+import $ from 'jquery';
+
+var UserGist = React.createClass({
+    getInitialState: function() {
+        return {
+            username: '',
+            lastGistUrl: ''
+        };
+    },
+    componentDidMount: function() {
+        console.log("asdasd");
+        $.get(this.props.source, function(result) {
+            console.log(result);
+            var lastGist = result[0];
+            if (this.isMounted()) {
+                this.setState({
+                    username: lastGist.owner.login,
+                    lastGistUrl: lastGist.html_url
+                });
+            };
+        }.bind(this));
+    },
+    render: function() {
+        return (
+            <div>
+                {this.state.username}'s last gist is <a href={this.state.lastGistUrl}>here</a>.
+            </div>
+        );
+    }
+});
+
+ReactDOM.render(
+    <div>
+        <UserGist source="https://api.github.com/users/octocat/gists" />
+    </div>,
+    document.getElementById('root')
+);
+```
+
+#备注
+```
+<!-- Before (15.4 and below) -->
+var React = require('react');
+
+var Component = React.createClass({
+  mixins: [MixinA],
+  render() {
+    return <Child />;
+  }
+});
+
+// After (15.5)
+var React = require('react');
+var createReactClass = require('create-react-class');
+
+var Component = createReactClass({
+  mixins: [MixinA],
+  render() {
+    return <Child />;
+  }
+});
+```
+
+
 #环境准备
 1. 安装node
 2. `sudo npm install webpack-dev-server -g`
